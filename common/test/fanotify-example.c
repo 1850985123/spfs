@@ -120,7 +120,7 @@ event_process (struct fanotify_event_metadata *event)
                                    path,
                                    PATH_MAX) ?
           path : "unknown");
-  printf (" pid=%d (%s): \n",
+  printf (" pid=%d (%s): ",
           event->pid,
           (get_program_name_from_pid (event->pid,
                                         path,
@@ -188,7 +188,7 @@ initialize_fanotify (int          argc,
       monitors[i].path = strdup (argv[i + 1]);
       /* Add new fanotify mark */
       if (fanotify_mark (fanotify_fd,
-                         FAN_MARK_ADD,
+                         FAN_MARK_ADD|FAN_MARK_MOUNT,
                          event_mask,
                          AT_FDCWD,
                          monitors[i].path) < 0)
